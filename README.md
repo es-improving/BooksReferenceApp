@@ -15,5 +15,17 @@ There are two (or three) default paths, and here is how they get mapped to code:
 What controls this? This is called "Routing" in ASP.NET. It's setup in `Startup.cs`. Search for the function `MapControllerRoute`.
 
 
+## SQL Stuff
+
+Want to create a database? `CREATE DATABASE [namegoesherewithoutbrackets]`
+
+Want to create a table? Example:
+
+```
+CREATE TABLE Books (
+    BookId INT PRIMARY KEY IDENTITY,
+    Title NVARCHAR(300) NOT NULL
+)
+```
 
 
