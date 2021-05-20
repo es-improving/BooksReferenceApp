@@ -1,4 +1,5 @@
 ﻿using Books.Models;
+using Books.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -21,6 +22,8 @@ namespace Books.Controllers
 
         public IActionResult Index()
         {
+            var books = new List<Book>();
+
             //NOTE: DO NOT EVER HARDCODE YOUR CONNECTION STRING IN CODE LIKE THIS
             using (var conn = new SqlConnection("Server=.;Database=Books;Trusted_Connection=True;"))
             {
@@ -37,11 +40,23 @@ namespace Books.Controllers
                 {
                     var title = reader["Title"].ToString();
                     var id = Convert.ToInt32(reader["BookId"]);
+
+                    books.Add(new Book
+                    {
+                        Title = title,
+                        Id = id
+                    });
+
+                    // create my book here
                 }
 
             }
 
-            return View();
+            var vm = new HomeViewModel();
+            vm.Message = "Look at these wonderful books!";
+            vm.Books = books;
+
+            return View(vm);
         }
 
         public IActionResult Privacy()

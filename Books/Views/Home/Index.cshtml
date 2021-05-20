@@ -1,8 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model Books.ViewModels.Home.HomeViewModel
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Here's some books</h1>
+    <p>@Model.Message</p>
+
+    @foreach (var book in Model.Books)
+    {
+        <p>@book.Title (@book.Id)</p>
+    }
 </div>
