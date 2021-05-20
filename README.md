@@ -28,4 +28,8 @@ CREATE TABLE Books (
 )
 ```
 
+## Adding Libraries
+
+Use Nuget to download as a dependency for the project. Go to `Manage Nuget Packages > Browse > [PackageName]` and then agree to all the dialog stuff.
+
 
