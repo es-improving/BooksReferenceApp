@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Dawgs</h1>
+
+<button id="get-new-dawg">Get new dawg</button>
+<img id="the-image" style="display: none;" />
+<video id="the-video" controls  style="display: none;" />
+
+<style>
+
+    img {
+        max-width: 200px;
+    }
+
+    video {
+        max-width: 200px;
+    }
+
+
+</style>
+
+
+<script>
+    /*
+    fetch('https://random.dog/woof.json')
+        .then(response => response.json())
+        .then(data => console.log(data));
+    */
+
+    const dawgButton = document.querySelector('#get-new-dawg');
+    dawgButton.addEventListener('click', () => {
+        fetchThatDawg();
+    });
+
+
+    function fetchThatDawg() {
+        fetch('https://random.dog/woof.json')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                const imgTag = document.querySelector('#the-image');
+                const videoTag = document.querySelector('#the-video');
+
+                //substring out last chars
+                //contains
+                //split by period
+                //indexOf
+
+                const urlParts = data.url.split('.');
+                console.log('urlParts', urlParts);
+
+                const lastIndex = urlParts.length - 1;
+                const extension = urlParts[lastIndex];
+
+                if (extension === 'mp4') {
+                    //show video
+                    imgTag.style.display = 'none';
+                    videoTag.style.display = 'inline-block';
+                    videoTag.src = data.url;
+                }
+                else {
+                    //show photo
+                    imgTag.src = data.url;
+                    imgTag.style.display = 'inline-block';
+                    videoTag.style.display = 'none';
+                }
+            });
+    }
+
+    fetchThatDawg();
+
+</script>
