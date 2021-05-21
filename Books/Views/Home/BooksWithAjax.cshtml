@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Books with Ajax</h1>
+
+<p>UNDER CONSTRUCTION: Will use this JSON data to build out the page.</p>
+
+<script>
+    fetch('/Home/BookData')
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data);
+        });
+</script>

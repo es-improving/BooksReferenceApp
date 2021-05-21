@@ -20,7 +20,8 @@ namespace Books.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        // TODO: This is not where this belongs! We'll continue refactoring and put it elsewhere later.
+        private List<Book> AllBookData()
         {
             var books = new List<Book>();
 
@@ -36,7 +37,7 @@ namespace Books.Controllers
 
                 var reader = cmd.ExecuteReader();
 
-                while(reader.Read())
+                while (reader.Read())
                 {
                     var title = reader["Title"].ToString();
                     var id = Convert.ToInt32(reader["BookId"]);
@@ -46,17 +47,33 @@ namespace Books.Controllers
                         Title = title,
                         Id = id
                     });
-
-                    // create my book here
                 }
-
             }
+
+            return books;
+        }
+
+        public IActionResult Index()
+        {
+            var books = AllBookData();   
 
             var vm = new HomeViewModel();
             vm.Message = "Look at these wonderful books!";
             vm.Books = books;
 
             return View(vm);
+        }
+
+        public IActionResult BooksWithAjax()
+        {
+            return View();
+        }
+
+        public IActionResult BookData()
+        {
+            var books = AllBookData();
+
+            return Json(books);
         }
 
         public IActionResult Privacy()
