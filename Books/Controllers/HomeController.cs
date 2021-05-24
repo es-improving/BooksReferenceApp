@@ -48,6 +48,12 @@ namespace Books.Controllers
             return Json(books);
         }
 
+        //Home/Book/42
+        public IActionResult Book(int? id)
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

@@ -9,6 +9,6 @@
 
     @foreach (var book in Model.Books)
     {
-        <p>@book.Title (@book.Id)</p>
+        <p><a href="/home/book/@book.Id">@book.Title</a></p>
     }
 </div>
