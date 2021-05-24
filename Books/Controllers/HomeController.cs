@@ -16,49 +16,18 @@ namespace Books.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly BookData _bookData;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, BookData bookData)
         {
             _logger = logger;
             _configuration = configuration;
-        }
-
-        // TODO: This is not where this belongs! We'll continue refactoring and put it elsewhere later.
-        private List<Book> AllBookData()
-        {
-            var books = new List<Book>();
-
-            var connString = _configuration.GetConnectionString("default");
-            using (var conn = new SqlConnection(connString))
-            {
-                conn.Open();
-
-                var cmd = new SqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = "SELECT * FROM Books";
-
-                var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    var title = reader["Title"].ToString();
-                    var id = Convert.ToInt32(reader["BookId"]);
-
-                    books.Add(new Book
-                    {
-                        Title = title,
-                        Id = id
-                    });
-                }
-            }
-
-            return books;
+            _bookData = bookData;
         }
 
         public IActionResult Index()
         {
-            var books = AllBookData();   
+            var books = _bookData.AllBookData();   
 
             var vm = new HomeViewModel();
             vm.Message = "Look at these wonderful books!";
@@ -74,7 +43,7 @@ namespace Books.Controllers
 
         public IActionResult BookData()
         {
-            var books = AllBookData();
+            var books = _bookData.AllBookData();
 
             return Json(books);
         }
