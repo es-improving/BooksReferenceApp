@@ -1,6 +1,7 @@
 ﻿using Books.Models;
 using Books.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,12 @@ namespace Books.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         // TODO: This is not where this belongs! We'll continue refactoring and put it elsewhere later.
@@ -25,8 +28,8 @@ namespace Books.Controllers
         {
             var books = new List<Book>();
 
-            //NOTE: DO NOT EVER HARDCODE YOUR CONNECTION STRING IN CODE LIKE THIS
-            using (var conn = new SqlConnection("Server=.;Database=Books;Trusted_Connection=True;"))
+            var connString = _configuration.GetConnectionString("default");
+            using (var conn = new SqlConnection(connString))
             {
                 conn.Open();
 
