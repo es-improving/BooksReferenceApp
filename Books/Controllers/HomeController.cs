@@ -51,6 +51,8 @@ namespace Books.Controllers
         //Home/Book/42
         public IActionResult Book(int? id)
         {
+            // TODO: Use the id passed and go get the book data.
+            // Use that book data to create a new view.
             return View();
         }
 
