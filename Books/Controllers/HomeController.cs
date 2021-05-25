@@ -53,7 +53,11 @@ namespace Books.Controllers
         {
             // TODO: Use the id passed and go get the book data.
             // Use that book data to create a new view.
-            return View();
+            var vm = new BookDetailViewModel
+            {
+                Book = _bookData.GetBook(id.Value)
+            };
+            return View(vm);
         }
 
         public IActionResult Privacy()
