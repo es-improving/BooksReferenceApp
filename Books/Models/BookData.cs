@@ -67,7 +67,6 @@ namespace Books.Models
                 if (reader.Read())
                 {
                     var title = reader["Title"].ToString();
-                    var bookId = Convert.ToInt32(reader["BookId"]);
 
                     return new Book
                     {
@@ -78,6 +77,29 @@ namespace Books.Models
             }
 
             return null;
+        }
+
+        public void CreateNewBook(Book book)
+        {
+            string connString = _configuration.GetConnectionString("default");
+            using (var connection = new SqlConnection(connString))
+            {
+                connection.Open();
+
+                var cmd = new SqlCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "INSERT INTO Books (Title) VALUES (@title)";
+                cmd.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@title",
+                    Value = book.Title,
+                    SqlDbType = SqlDbType.NVarChar
+                });
+
+                cmd.Connection = connection;
+
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 }

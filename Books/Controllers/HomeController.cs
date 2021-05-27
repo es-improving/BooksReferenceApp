@@ -60,6 +60,20 @@ namespace Books.Controllers
             return View(vm);
         }
 
+
+        [HttpGet]
+        public IActionResult NewBook()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult NewBook(Book book)
+        {
+            _bookData.CreateNewBook(book);
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Privacy()
         {
             return View();
